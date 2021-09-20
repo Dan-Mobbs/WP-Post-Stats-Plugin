@@ -50,7 +50,7 @@
 
     function createHTML($content)
     {
-        $htmlPageContent = '<h3>' . get_option( 'dsm_headline', 'Post Statistics' ) . '</h3><p>';
+        $htmlPageContent = '<h3>' . esc_html(get_option( 'dsm_headline', 'Post Statistics' )) . '</h3><p>';
 
         // Get word count once!
         if ( get_option( 'dsm_word_count', '1') OR get_option( 'dsm_read_count', '1')) 
@@ -63,10 +63,17 @@
             $htmlPageContent .= 'This post has: ' . $wordCount . ' Words. <br />';
         }
 
-        if ( get_option( 'dsm_word_count', '1') )
+        if ( get_option( 'dsm_char_count', '1') )
         {
             $htmlPageContent .= 'This post has: ' . strlen(strip_tags($content)) . ' characters. <br />';
         }
+
+        if ( get_option( 'dsm_read_count', '1') )
+        {
+            $htmlPageContent .= 'This post will take about: ' . round($wordCount/255) . ' minute(s) to read. <br />';
+        }
+
+        $html .= '</p>';
 
         if ( get_option(  'dsm_location', '0' ) == '0' ) 
         {
